@@ -1,0 +1,16 @@
+{
+  "name": "01_lection",
+  "version": "0.0.1",
+  "description": "demo",
+  "main": "index.js",
+  "engine": "7.1.0",
+  "scripts": {    
+    "start": "node index.js",
+    "test": "standard --fix"
+  },
+  "author": "PP",
+  "license": "MIT",
+  "dependencies": {
+    "standard": "11.0.1"
+  }
+}
