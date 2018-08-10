@@ -55,15 +55,43 @@ let clear = () => {
   data = {}
 }
 
-let save = () => {
+// Sync way
+// let save = () => {
+//   let dataAsString = JSON.stringify(data)
+//   fs.writeFileSync(dataFile, dataAsString)
+//   console.log('Data is saved successfully')
+// }
+
+// let load = () => {
+//   let dataAsString = fs.readFileSync(dataFile, 'utf8')
+//   data = JSON.parse(dataAsString)
+// }
+
+// Callback way
+let save = (callback) => {
   let dataAsString = JSON.stringify(data)
-  fs.writeFileSync(dataFile, dataAsString)
+  fs.writeFile(dataFile, dataAsString, (err) => {
+    if (err) {
+      console.log(err)
+      return
+    }
+
+    callback()
+  })
+
   console.log('Data is saved successfully')
 }
 
-let load = () => {
-  let dataAsString = fs.readFileSync(dataFile, 'utf8')
-  data = JSON.parse(dataAsString)
+let load = (callback) => {
+  fs.readFile(dataFile, 'utf8', (err, dataJson) => {
+    if (err) {
+      console.log(err)
+      return
+    }
+
+    data = JSON.parse(dataJson)
+    callback()
+  })
 }
 
 module.exports = {

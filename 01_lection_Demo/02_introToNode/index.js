@@ -13,13 +13,19 @@ storage.update('first', 'another value')
 someValue = storage.get('first')
 console.log(someValue)
 
-// Test save
-storage.save()
+// Sync way
+// storage.save()
+// storage.clear()
+// storage.load()
+// someValue = storage.get('first')
+// console.log(someValue)
 
-// Test clear
-storage.clear()
+// Async way, all function are waiting save to finish
 
-// Test load
-storage.load()
-someValue = storage.get('first')
-console.log(someValue)
+storage.save(() => {
+  storage.clear()
+  storage.load(() => {
+    someValue = storage.get('first')
+    console.log(someValue)
+  })
+})
