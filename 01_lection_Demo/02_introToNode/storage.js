@@ -55,6 +55,31 @@ let clear = () => {
   data = {}
 }
 
+// Promise way
+let save = () => {
+  return new Promise((resolve, reject) => {
+    fs.writeFile(dataFile, JSON.stringify(data), err => {
+      if (err) {
+        reject(err)
+        return
+      }
+      resolve()
+    })
+  })
+}
+
+let load = () => {
+  return new Promise((resolve, reject) => {
+    fs.readFile(dataFile, 'utf8', (err, dataAsJson) => {
+      if (err) {
+        reject(err)
+        return
+      }
+      data = JSON.parse(dataAsJson)
+      resolve()
+    })
+  })
+}
 // Sync way
 // let save = () => {
 //   let dataAsString = JSON.stringify(data)
@@ -68,30 +93,34 @@ let clear = () => {
 // }
 
 // Callback way
-let save = (callback) => {
-  let dataAsString = JSON.stringify(data)
-  fs.writeFile(dataFile, dataAsString, (err) => {
-    if (err) {
-      console.log(err)
-      return
-    }
+// let save = (callback) => {
+//   let dataAsString = JSON.stringify(data)
+//   fs.writeFile(dataFile, dataAsString, (err) => {
+//     if (err) {
+//       console.log(err)
+//       return
+//     }
 
-    callback()
-  })
+//     callback()
+//   })
 
-  console.log('Data is saved successfully')
-}
+//   console.log('Data is saved successfully')
+// }
 
-let load = (callback) => {
-  fs.readFile(dataFile, 'utf8', (err, dataJson) => {
-    if (err) {
-      console.log(err)
-      return
-    }
+// let load = (callback) => {
+//   fs.readFile(dataFile, 'utf8', (err, dataJson) => {
+//     if (err) {
+//       console.log(err)
+//       return
+//     }
 
-    data = JSON.parse(dataJson)
-    callback()
-  })
+//     data = JSON.parse(dataJson)
+//     callback()
+//   })
+// }
+
+let printData = () => {
+  console.log(data)
 }
 
 module.exports = {
@@ -101,5 +130,6 @@ module.exports = {
   delete: deleteItem,
   clear: clear,
   save: save,
-  load: load
+  load: load,
+  printData
 }

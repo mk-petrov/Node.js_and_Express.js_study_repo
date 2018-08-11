@@ -22,10 +22,23 @@ console.log(someValue)
 
 // Async way, all function are waiting save to finish
 
-storage.save(() => {
-  storage.clear()
-  storage.load(() => {
-    someValue = storage.get('first')
-    console.log(someValue)
+// Callback testing
+// storage.save(() => {
+//   storage.clear()
+//   storage.load(() => {
+//     someValue = storage.get('first')
+//     console.log(someValue)
+//   })
+// })
+
+// Promise testing
+storage
+  .save()
+  .then(() => {
+    storage.clear()
+    storage.printData()
+
+    storage
+      .load()
+      .then(() => { storage.printData() })
   })
-})
