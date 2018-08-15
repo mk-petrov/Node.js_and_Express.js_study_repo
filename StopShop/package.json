@@ -1,0 +1,16 @@
+{
+  "name": "stopshop",
+  "version": "0.0.1",
+  "description": "shopping site",
+  "main": "index.js",
+  "engine": "7.1.0",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [
+    "shop",
+    "store"
+  ],
+  "author": "PP",
+  "license": "MIT"
+}
