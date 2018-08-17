@@ -12,5 +12,9 @@
     "store"
   ],
   "author": "PP",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "multiparty": "^4.2.1",
+    "shortid": "^2.2.13"
+  }
 }
