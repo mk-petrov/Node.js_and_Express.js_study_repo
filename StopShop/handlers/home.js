@@ -1,7 +1,6 @@
 const fs = require('fs')
 const url = require('url')
 const path = require('path')
-// const database = require('../config/database')
 const qs = require('querystring')
 const Product = require('../models/Product')
 
