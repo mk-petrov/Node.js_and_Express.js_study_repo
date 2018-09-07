@@ -6,6 +6,10 @@ module.exports = (app, config) => {
   // Configure middleware for parsing from data
   app.use(bodyParser.urlencoded({extended: true}))
 
+  // Configure view engine
+  app.use('view engine', 'pug')
+  app.use('views', path.join(config.rootPath, 'views'))
+
   // Configure 'public' folder
   app.use((req, res, next) => {
     if (req.url.startsWith('/content')) {
