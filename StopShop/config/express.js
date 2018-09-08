@@ -7,8 +7,8 @@ module.exports = (app, config) => {
   app.use(bodyParser.urlencoded({extended: true}))
 
   // Configure view engine
-  app.use('view engine', 'pug')
-  app.use('views', path.join(config.rootPath, 'views'))
+  app.set('view engine', 'pug')
+  app.set('views', path.join(config.rootPath, 'views'))
 
   // Configure 'public' folder
   app.use((req, res, next) => {
