@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 extends ../layout.pug
 
 block content
@@ -18,3 +19,18 @@ block content
         a.btn.btn-small.btn-primary(href=`/category/${product.category.name}/products`)= `More ${product.category.name}`
         
         
+=======
+extends ../layout.pug
+
+block content
+  h1.head-title Welcome to ShopStop!
+  form#search-form
+    input(type='text', name='query', placeholder='Search...')
+    input(type='submit', value='Search')
+  .cards
+    each product in products
+      .product-card
+        img.product-img(src=`${product.image}`)
+        h2=product.name
+        p=product.description
+>>>>>>> d52be0998f30ec3dd56b1a748b3bdfcb3504bf80
