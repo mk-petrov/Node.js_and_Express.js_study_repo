@@ -1,7 +1,7 @@
 const handlers = require('../handlers') // by default will seacrh index.js file
 const multer = require('multer')
 
-let upload = multer({ dest: './content/images' })
+let upload = multer({dest: './content/images'})
 
 module.exports = (app) => {
   app.get('/', handlers.home.index)
@@ -11,4 +11,6 @@ module.exports = (app) => {
 
   app.get('/category/add', handlers.category.addGet)
   app.post('/category/add', handlers.category.addPost)
+
+  app.get('/category/:category/products', handlers.category.productByCategory)
 }

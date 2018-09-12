@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 
 module.exports = (app, config) => {
   // Configure middleware for parsing from data
-  app.use(bodyParser.urlencoded({ extended: true }))
+  app.use(bodyParser.urlencoded({extended: true}))
 
   // Configure view engine
   app.set('view engine', 'pug')
