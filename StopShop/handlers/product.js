@@ -1,5 +1,7 @@
 const Product = require('../models/Product')
 const Category = require('../models/Category')
+const fs = require('fs')
+const path = require('path')
 
 module.exports.addGet = (req, res) => {
   Category
@@ -83,14 +85,56 @@ module.exports.editPost = (req, res) => {
             nextCategory.save()
 
             product.category = editedProduct.category
+
+            // Save the product
+            product.save().then(() => {
+              // String interpolation avoided for space or "/"
+              res.redirect('/?success=' + encodeURIComponent('Product was edited successfully'))
+            })
           })
         })
+      } else {
+        // Save the product
+        product.save().then(() => {
+          // String interpolation avoided for space or "/"
+          res.redirect('/?success=' + encodeURIComponent('Product was edited successfully'))
+        })
+      }
+    })
+}
+
+module.exports.deleteGet = (req, res) => {
+  let id = req.params.id
+
+  Product
+    .findById(id)
+    .then(product => {
+      if (!product) {
+        res.status(404).send('Not Found')
+        return
       }
 
-      // Save the product
-      product.save().then(() => {
-        // String interpolation avoided for space or "/"
-        res.redirect('/?success=' + encodeURIComponent('Product was edited successfully'))
+      res.render('product/delete', {
+        product: product
       })
     })
+}
+
+module.exports.deletePost = (req, res) => {
+  let id = req.params.id
+  Product.findOneAndRemove({ _id: id }).then(product => {
+    if (!product) {
+      res.redirect(`/?error=${encodeURIComponent('error=Product was not found!')}`)
+      return
+    }
+
+    // remove the img from DB ??
+    let imgLink = path.join(__dirname, product.image)
+    console.log(imgLink) // D:\ProjectsJS\StopShop\handlers\content\images\bc901d0d1207348a4410bbeba4f3e4e7
+    fs.unlink(product.image, () => {
+      console.log('image removed')
+    })
+
+    res.redirect('/?success=' + encodeURIComponent('Product was deleted successfully'))
+  })
 }
