@@ -1,7 +1,7 @@
 const Product = require('../models/Product')
 const Category = require('../models/Category')
 const fs = require('fs')
-const path = require('path')
+// const path = require('path')
 
 module.exports.addGet = (req, res) => {
   Category
@@ -128,10 +128,14 @@ module.exports.deletePost = (req, res) => {
       return
     }
 
-    // remove the img from DB ??
-    let imgLink = path.join(__dirname, product.image)
-    console.log(imgLink) // D:\ProjectsJS\StopShop\handlers\content\images\bc901d0d1207348a4410bbeba4f3e4e7
-    fs.unlink(product.image, () => {
+    let imgLink = '.' + product.image
+    let link = imgLink.replace(/\\/g, '/')
+
+    fs.unlink(link, (file) => {
+      if (!file) {
+        // TODO
+        console.log('file not found')
+      }
       console.log('image removed')
     })
 

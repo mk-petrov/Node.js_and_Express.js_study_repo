@@ -1,7 +1,27 @@
 const handlers = require('../handlers') // by default will seacrh index.js file
 const multer = require('multer')
 
-let upload = multer({dest: './content/images'})
+let storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, `./content/images/`)
+  },
+  filename: (req, file, cb) => {
+    if (file.mimetype === 'image/png') {
+      cb(null, Date.now() + '-' + file.originalname)
+      return
+    }
+    console.log('File not supported')
+  },
+  limits: (req, file, cb) => {
+    // 1MB
+    if (file.fileSize > 1024 * 1024 * 1) {
+      console.log('File too big')
+      return
+    }
+    // TODO
+  }
+})
+let upload = multer({ storage: storage }) // dest: './content/images'
 
 module.exports = (app) => {
   app.get('/', handlers.home.index)
