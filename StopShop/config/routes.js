@@ -7,21 +7,27 @@ let storage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     if (file.mimetype === 'image/png') {
-      cb(null, Date.now() + '-' + file.originalname)
-      return
+      cb(null, Date.now() + file.originalname)
     }
-    console.log('File not supported')
-  },
-  limits: (req, file, cb) => {
-    // 1MB
-    if (file.fileSize > 1024 * 1024 * 1) {
-      console.log('File too big')
-      return
-    }
-    // TODO
   }
 })
-let upload = multer({ storage: storage }) // dest: './content/images'
+// specify accepted file types for upload
+const fileFilter = (req, file, callback) => {
+  // console.log(file)
+  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+    callback(null, true) // save the image
+  } else {
+    callback(null, false) // dont save the image
+  }
+}
+
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 1024 * 1024 * 3 // max file size in bytes (in this case max 3 MB)
+  },
+  fileFilter: fileFilter
+})
 
 module.exports = (app) => {
   app.get('/', handlers.home.index)

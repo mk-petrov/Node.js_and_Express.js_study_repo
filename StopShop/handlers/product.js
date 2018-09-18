@@ -132,9 +132,10 @@ module.exports.deletePost = (req, res) => {
     let link = imgLink.replace(/\\/g, '/')
 
     fs.unlink(link, (file) => {
+      console.log(file)
       if (!file) {
         // TODO
-        console.log('file not found')
+        console.log('file')
       }
       console.log('image removed')
     })
