@@ -1,4 +1,4 @@
-const handlers = require('../handlers') // by default will seacrh index.js file
+const controllers = require('../controllers') // by default will seacrh index.js file
 const multer = require('multer')
 
 let storage = multer.diskStorage({
@@ -30,18 +30,18 @@ const upload = multer({
 })
 
 module.exports = (app) => {
-  app.get('/', handlers.home.index)
+  app.get('/', controllers.home.index)
 
-  app.get('/product/add', handlers.product.addGet)
-  app.post('/product/add', upload.single('image'), handlers.product.addPost)
+  app.get('/product/add', controllers.product.addGet)
+  app.post('/product/add', upload.single('image'), controllers.product.addPost)
 
-  app.get('/category/add', handlers.category.addGet)
-  app.post('/category/add', handlers.category.addPost)
+  app.get('/category/add', controllers.category.addGet)
+  app.post('/category/add', controllers.category.addPost)
 
-  app.get('/category/:category/products', handlers.category.productByCategory)
+  app.get('/category/:category/products', controllers.category.productByCategory)
 
-  app.get('/product/edit/:id', handlers.product.editGet)
-  app.post('/product/edit/:id', upload.single('image'), handlers.product.editPost)
-  app.get('/product/delete/:id', handlers.product.deleteGet)
-  app.post('/product/delete/:id', handlers.product.deletePost)
+  app.get('/product/edit/:id', controllers.product.editGet)
+  app.post('/product/edit/:id', upload.single('image'), controllers.product.editPost)
+  app.get('/product/delete/:id', controllers.product.deleteGet)
+  app.post('/product/delete/:id', controllers.product.deletePost)
 }
