@@ -3,6 +3,7 @@ const ObjectId = mongoose.Schema.ObjectId
 
 let categorySchema = mongoose.Schema({
   name: { type: String, required: true, unique: true },
+  creator: { type: ObjectId, ref: 'User', required: true },
   products: [ { type: ObjectId, ref: 'Product' } ] // one-to-many relationship
 })
 

@@ -3,7 +3,7 @@ const ObjectId = mongoose.Schema.ObjectId
 
 let productSchema = mongoose.Schema({
   name: { type: String, required: true },
-  description: { type: String },
+  description: { type: String, required: true },
   price: {
     type: Number,
     min: 0,
@@ -11,8 +11,9 @@ let productSchema = mongoose.Schema({
     default: 0
   },
   image: { type: String },
-  category: { type: ObjectId, ref: 'Category' },
-  isBought: { type: Boolean, default: false }
+  category: { type: ObjectId, ref: 'Category', required: true },
+  buyer: { type: ObjectId, ref: 'User' },
+  creator: { type: ObjectId, ref: 'User', required: true }
 })
 
 let Product = mongoose.model('Product', productSchema)
