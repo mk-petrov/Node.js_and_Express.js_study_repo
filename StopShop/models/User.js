@@ -62,7 +62,8 @@ module.exports.seedAdminUser = () => {
   User.find({username: 'admin'}).then(users => {
     if (users.length === 0) {
       let salt = encryption.generateSalt()
-      let hashedPass = encryption.generatedHashedPassword(salt, 'Admin12')
+      let password = 'Admin12'
+      let hashedPass = encryption.generateHashedPassword(salt, password)
 
       User.create({
         username: 'admin',

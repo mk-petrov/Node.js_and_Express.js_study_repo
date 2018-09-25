@@ -44,4 +44,6 @@ module.exports = (app) => {
   app.post('/product/edit/:id', upload.single('image'), controllers.product.editPost)
   app.get('/product/delete/:id', controllers.product.deleteGet)
   app.post('/product/delete/:id', controllers.product.deletePost)
+
+  app.get('/user/register', controllers.user.registerGet)
 }
