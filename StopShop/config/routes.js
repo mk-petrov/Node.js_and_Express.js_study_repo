@@ -46,4 +46,5 @@ module.exports = (app) => {
   app.post('/product/delete/:id', controllers.product.deletePost)
 
   app.get('/user/register', controllers.user.registerGet)
+  app.post('/user/register', controllers.user.registerPost)
 }

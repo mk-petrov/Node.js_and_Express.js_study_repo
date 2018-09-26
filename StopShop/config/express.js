@@ -18,6 +18,15 @@ module.exports = (app, config) => {
   app.use(passport.initialize())
   app.use(passport.session())
 
+  // if logged in user, save it to the locals
+  app.use((req, res, next) => {
+    if (req.user) {
+      res.locals.user = req.user
+    }
+
+    next()
+  })
+
   // Configure view engine
   app.set('view engine', 'pug')
   app.set('views', path.join(config.rootPath, 'views'))
