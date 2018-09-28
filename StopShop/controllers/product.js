@@ -14,6 +14,7 @@ module.exports.addGet = (req, res) => {
 module.exports.addPost = (req, res) => {
   let productObj = req.body
   productObj.image = '\\' + req.file.path
+  productObj.creator = req.user._id
 
   Product.create(productObj).then((product) => {
     Category.findById(product.category).then(category => {
@@ -35,14 +36,16 @@ module.exports.editGet = (req, res) => {
         return
       }
 
-      Category
-        .find()
-        .then(categories => {
-          res.render('product/edit', {
-            product: product,
-            categories: categories
+      if (product.creator.equals(req.user._id) || req.user.roles.indexOf('Admin') >= 0) {
+        Category
+          .find()
+          .then(categories => {
+            res.render('product/edit', {
+              product: product,
+              categories: categories
+            })
           })
-        })
+      }
     })
 }
 
@@ -114,9 +117,11 @@ module.exports.deleteGet = (req, res) => {
         return
       }
 
-      res.render('product/delete', {
-        product: product
-      })
+      if (product.creator.equals(req.user._id) || req.user.roles.indexOf('Admin') >= 0) {
+        res.render('product/delete', {
+          product: product
+        })
+      }
     })
 }
 
@@ -128,18 +133,39 @@ module.exports.deletePost = (req, res) => {
       return
     }
 
-    let imgLink = '.' + product.image
-    let link = imgLink.replace(/\\/g, '/')
+    if (product.creator.equals(req.user._id) || req.user.roles.indexOf('Admin') >= 0) {
+      let imgLink = '.' + product.image
+      let link = imgLink.replace(/\\/g, '/')
 
-    fs.unlink(link, (file) => {
-      console.log(file)
-      if (!file) {
-        // TODO
-        console.log('file')
-      }
-      console.log('image removed')
+      fs.unlink(link, (file) => {
+        console.log(file)
+        if (!file) {
+          console.log('file')
+        }
+        console.log('image removed')
+      })
+
+      res.redirect('/?success=' + encodeURIComponent('Product was deleted successfully'))
+    }
+  })
+}
+
+module.exports.buyPost = (req, res) => {
+  let productId = req.params.id
+
+  Product.findById(productId).then(product => {
+    if (product.buyer) {
+      let error = `error=${encodeURIComponent('Product was already bought!')}`
+      res.redirect(`/?${error}`)
+      return
+    }
+
+    product.buyer = req.params._id
+    product.save().then(() => {
+      req.user.boughtProducts.push(productId)
+      req.user.save().then(() => {
+        res.redirect('/')
+      })
     })
-
-    res.redirect('/?success=' + encodeURIComponent('Product was deleted successfully'))
   })
 }

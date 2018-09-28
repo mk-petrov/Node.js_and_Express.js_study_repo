@@ -24,6 +24,10 @@ let userSchema = mongoose.Schema({
     type: mongoose.Schema.Types.String,
     required: propertyIsRequired.replace('{0}', 'Last name')
   },
+  avatar: {
+    type: mongoose.Schema.Types.String,
+    default: '/content/images/avatar.png'
+  },
   age: {
     type: mongoose.Schema.Types.Number,
     min: [0, 'Age must be between 0 and 120'],

@@ -1,0 +1,30 @@
+//- <figure class="profile">
+//-   <div class="profile-image"><img src="" alt="avatar" /></div>
+//-   <figcaption>
+//-     <h3>Fleece Marigold</h3>
+//-     <h4>Founder</h4>
+//-     <p>Which is worse, that everyone has his price, or that the price is always so low.</p>
+//-     <div class="icons">
+//-       <a href="#"><i class="ion-social-reddit"></i></a>
+//-       <a href="#"> <i class="ion-social-twitter"></i></a>
+//-       <a href="#"> <i class="ion-social-vimeo"></i></a>
+//-     </div>
+//-   </figcaption>
+//- </figure>
+
+extends ../layout.pug
+
+block content
+  figure.snip1515
+    div.profile-image
+      img(src=`${user.avatar}` alt="avatar")
+    figcaption
+      h3=user.firstName
+      h4=user.lastName
+      div.icons
+        a(href='#')
+          i.ion-social-reddit
+        a(href='#')
+          i.ion-social-twitter
+        a(href='#')
+          i.ion-social-vimeo

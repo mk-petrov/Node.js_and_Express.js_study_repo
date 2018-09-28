@@ -68,3 +68,7 @@ module.exports.logout = (req, res) => {
   req.logout()
   res.redirect('/')
 }
+
+module.exports.getUserInfo = (req, res) => {
+  res.render('user/profile', res.locals.user)
+}
