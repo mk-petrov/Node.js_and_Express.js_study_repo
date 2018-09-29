@@ -29,12 +29,14 @@ module.exports.addPost = (req, res) => {
 module.exports.editGet = (req, res) => {
   let id = req.params.id
   Product
-    .findById(id)
+    .findOne({buyer: null, _id: id})
     .then(product => {
       if (!product) {
         res.status(404).send('Not Found')
         return
       }
+      console.log(product.creator)
+      // console.log(req.user._id)
 
       if (product.creator.equals(req.user._id) || req.user.roles.indexOf('Admin') >= 0) {
         Category
@@ -55,7 +57,7 @@ module.exports.editPost = (req, res) => {
 
   Product
     .findById(id).then(product => {
-      if (!product) {
+      if (!product || product.buyer !== null) {
         res.redirect(`/?error=${encodeURIComponent('error=Product was not found!')}`)
         return
       }
@@ -112,7 +114,7 @@ module.exports.deleteGet = (req, res) => {
   Product
     .findById(id)
     .then(product => {
-      if (!product) {
+      if (!product || product.buyer !== null) {
         res.status(404).send('Not Found')
         return
       }
@@ -128,8 +130,8 @@ module.exports.deleteGet = (req, res) => {
 module.exports.deletePost = (req, res) => {
   let id = req.params.id
   Product.findOneAndRemove({ _id: id }).then(product => {
-    if (!product) {
-      res.redirect(`/?error=${encodeURIComponent('error=Product was not found!')}`)
+    if (!product || product.buyer !== null) {
+      res.redirect(`/?error=${encodeURIComponent('Product was not found!')}`)
       return
     }
 
@@ -160,7 +162,7 @@ module.exports.buyPost = (req, res) => {
       return
     }
 
-    product.buyer = req.params._id
+    product.buyer = req.user._id
     product.save().then(() => {
       req.user.boughtProducts.push(productId)
       req.user.save().then(() => {

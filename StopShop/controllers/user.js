@@ -1,5 +1,6 @@
 const User = require('../models/User')
 const encryption = require('../utilities/encryption')
+const Product = require('../models/Product')
 
 module.exports.registerGet = (req, res) => {
   res.render('user/register')
@@ -70,5 +71,9 @@ module.exports.logout = (req, res) => {
 }
 
 module.exports.getUserInfo = (req, res) => {
-  res.render('user/profile', res.locals.user)
+
+  Product.find({buyer: res.locals.user._id}).then(products => {
+    let data = products
+    res.render('user/profile', { user: res.locals.user, products: data })
+  })
 }

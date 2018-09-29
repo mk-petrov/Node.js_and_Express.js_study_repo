@@ -45,7 +45,7 @@ module.exports = (app) => {
   app.post('/product/edit/:id', auth.isAuthenticated, upload.single('image'), controllers.product.editPost)
   app.get('/product/delete/:id', auth.isAuthenticated, controllers.product.deleteGet)
   app.post('/product/delete/:id', auth.isAuthenticated, controllers.product.deletePost)
-  app.post('/product/buy/:id', auth.isAuthenticated, controllers.product.buyPost)
+  app.get('/product/buy/:id', auth.isAuthenticated, controllers.product.buyPost)
 
   app.get('/user/register', controllers.user.registerGet)
   app.post('/user/register', controllers.user.registerPost)
