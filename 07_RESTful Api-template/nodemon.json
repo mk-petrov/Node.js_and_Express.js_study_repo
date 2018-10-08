@@ -1,0 +1,6 @@
+{
+  "env": {
+    "MONGO_ATLAS_PWD": "add-app-password-here",
+    "JWT_KEY": "add-server-auth-string"
+  }
+}

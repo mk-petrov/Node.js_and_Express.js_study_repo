@@ -60,5 +60,8 @@ typings/
 # next.js build output
 .next
 
+# Mac OS X
+.DS_Store
+
 # Visual Studio Code files
 .vscode
